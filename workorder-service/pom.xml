@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ir.dadeandish</groupId>
-    <artifactId>equipment-service</artifactId>
+    <artifactId>workorder</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>equipment-service</name>
-    <description>equipment-service</description>
+    <name>workorder</name>
+    <description>workorder</description>
     <url/>
     <licenses>
         <license/>
@@ -29,6 +29,7 @@
     <properties>
         <java.version>17</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

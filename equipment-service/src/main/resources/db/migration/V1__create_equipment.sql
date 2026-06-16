@@ -1,0 +1,5 @@
+CREATE TABLE equipment (
+       id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+       name VARCHAR(255) NOT NULL,
+       equipment_status VARCHAR(50) NOT NULL
+);
