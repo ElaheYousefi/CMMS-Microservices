@@ -1,4 +1,4 @@
-package ir.dadeandish.application;
+package ir.dadeandish.notificationservice.application;
 
 import org.springframework.stereotype.Service;
 

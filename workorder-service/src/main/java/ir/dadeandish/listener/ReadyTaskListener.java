@@ -17,6 +17,7 @@ public class ReadyTaskListener {
     @KafkaListener(topics="ready-task-topic",
             groupId="workorder-group")
     public void consume(ReadyAssignTasksEvent event){
-        workOrderService.addWorkOrder(event.getTaskId(), event.getEquipId());
+        workOrderService.addWorkOrder(event.getTaskId(),
+                event.getEquipId());
     }
 }

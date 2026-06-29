@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ir.dadeandish.domain.OutboxEvent;
 import ir.dadeandish.domain.OutboxRepository;
 import ir.dadeandish.enums.OutboxStatus;
+import ir.dadeandish.event.WorkOrderCompletedEvent;
 import ir.dadeandish.event.WorkOrderCreatedEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,18 +25,51 @@ public class OutboxPublisher {
 
     @Transactional
     public void publishSingleEvent(Integer id) throws JsonProcessingException, ExecutionException, InterruptedException {
+
         OutboxEvent outboxEvent= outboxRepository.findById(id)
                 .orElseThrow();
+
         try {
-            WorkOrderCreatedEvent kafkaEvent = objectMapper.readValue(
-                    outboxEvent.getPayload(),
-                    WorkOrderCreatedEvent.class
-            );
-            kafkaTemplate.send("workorder-created-topic", kafkaEvent).get();//wait for broker ack
+            switch (outboxEvent.getEventType()) {
+
+                case WORKORDER_ASSIGNED:
+                    publishWorkOrderAssigned(outboxEvent);
+                    break;
+
+                case WORKORDER_COMPLETED:
+                    publishWorkOrderCompleted(outboxEvent);
+                    break;
+
+                default:
+                    throw new IllegalArgumentException(
+                            "Unknown event type: " +
+                                    outboxEvent.getEventType()
+                    );
+            }
             outboxEvent.setStatus(OutboxStatus.PUBLISHED);
-        }catch (Exception ex){
-            outboxEvent.setStatus(OutboxStatus.PENDING);
+        }catch(Exception ex) {
+
+            outboxEvent.setStatus(
+                    OutboxStatus.PENDING);
+
             throw ex;
         }
+    }
+
+    public void publishWorkOrderAssigned(OutboxEvent outboxEvent) throws ExecutionException, JsonProcessingException, InterruptedException {
+
+        WorkOrderCreatedEvent kafkaEvent = objectMapper.readValue(
+                outboxEvent.getPayload(),
+                WorkOrderCreatedEvent.class
+        );
+        kafkaTemplate.send("workorder-assigned-topic", kafkaEvent).get();//wait for broker ack
+    }
+
+    public void publishWorkOrderCompleted(OutboxEvent outboxEvent) throws ExecutionException, JsonProcessingException, InterruptedException {
+        WorkOrderCompletedEvent kafkaEvent = objectMapper.readValue (
+            outboxEvent.getPayload(),
+            WorkOrderCompletedEvent.class
+        );
+        kafkaTemplate.send("workorder-completed-topic", kafkaEvent).get();//wait for broker ack
     }
 }

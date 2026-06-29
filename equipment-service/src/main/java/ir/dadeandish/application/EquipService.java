@@ -3,9 +3,9 @@ package ir.dadeandish.application;
 import ir.dadeandish.EquipmentMapper;
 import ir.dadeandish.domain.EquipModel;
 import ir.dadeandish.domain.EquipRepository;
-import ir.dadeandish.domain.EquipmentDTO;
+import ir.dadeandish.dto.EquipmentDTO;
+import ir.dadeandish.dto.EquipmentStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,11 +21,16 @@ public class EquipService {
         this.equipRepository = equipRepository;
     }
 
-    public EquipmentDTO saveEquip(EquipmentDTO dto){
-        validate(dto);
-        EquipModel model = mapper.toEntity(dto);
-        model = equipRepository.save(model);
-        return mapper.toDTO(model);
+    @Transactional
+    public void updateStatus(
+            Integer equipmentId,
+            EquipmentStatus status) {
+
+        EquipModel equipment =
+                equipRepository.findById(equipmentId)
+                        .orElseThrow();
+
+        equipment.setEquipmentStatus(status);
     }
 
     public EquipmentDTO getEquipByID(int id){
@@ -35,9 +40,7 @@ public class EquipService {
     }
 
     private EquipmentDTO convertEquipModelToDTO(EquipModel model){
-        EquipmentDTO dto = new EquipmentDTO();
-        dto.setId(model.getId());
-        dto.setName(model.getName());
+        EquipmentDTO dto = new EquipmentDTO(model.getId(), model.getName());
         return dto;
     }
 
@@ -54,12 +57,8 @@ public class EquipService {
         }
     }
 
-//    @EventListener
-//    @Transactional
-//    public void handle(WorkOrderCompletedEvent workOrderCompletedEvent){
-//        EquipModel equipModel= equipRepository.findById(workOrderCompletedEvent.getEquipmentId())
-//                        .orElseThrow(() -> new RuntimeException("there is no equipment with this id"));
-//        equipModel.setEquipmentStatus((EquipmentStatus) workOrderCompletedEvent.getEquipmentStatus());
-//        equipRepository.save(equipModel);
-//    }
+    public EquipModel findById(Integer id) {
+        return equipRepository.findById(id)
+                .orElseThrow();
+    }
 }

@@ -1,7 +1,6 @@
 package ir.dadeandish;
 
 import ir.dadeandish.domain.EquipModel;
-import ir.dadeandish.domain.EquipmentDTO;
 import org.springframework.stereotype.Component;
 
 @Component

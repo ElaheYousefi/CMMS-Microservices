@@ -1,12 +1,22 @@
 package ir.dadeandish.application;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ir.dadeandish.client.EquipmentClient;
 import ir.dadeandish.domain.*;
+import ir.dadeandish.dto.EquipmentDTO;
+import ir.dadeandish.dto.EquipmentStatus;
+import ir.dadeandish.enums.EventType;
+import ir.dadeandish.enums.OutboxStatus;
+import ir.dadeandish.event.WorkOrderCompletedEvent;
+import ir.dadeandish.event.WorkOrderCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -15,12 +25,24 @@ public class WorkOrderService{
     private WorkOrderRepository workOrderRepository;
     private static final Logger logger= LoggerFactory.getLogger(WorkOrderService.class);
     private final Mapper mapper;
+    private final EmployeeService employeeService;
+    private  final ObjectMapper objectMapper;
+    private final OutboxRepository outboxRepository;
+    private final EquipmentClient equipmentClient;
+    private final WorkorderAssignmentProcessor workorderAssignmentProcessor;
 
     @Autowired
-    public WorkOrderService(WorkOrderRepository workOrderRepository, Mapper mapper) {
+    public WorkOrderService(WorkOrderRepository workOrderRepository,
+                            Mapper mapper, EmployeeService employeeService, ObjectMapper objectMapper, OutboxRepository outboxRepository,
+                            EquipmentClient equipmentClient, WorkorderAssignmentProcessor workorderAssignmentProcessor) {
         this.workOrderRepository= workOrderRepository;
 //        this.employeeAPI= employeeAPI;
         this.mapper= mapper;
+        this.employeeService= employeeService;
+        this.objectMapper= objectMapper;
+        this.outboxRepository= outboxRepository;
+        this.equipmentClient= equipmentClient;
+        this.workorderAssignmentProcessor= workorderAssignmentProcessor;
     }
 
 //    @EventListener
@@ -32,41 +54,27 @@ public class WorkOrderService{
 //        }
 //    }
 
-    public WorkOrderModel addWorkOrder(int taskId, int equipId, String equipName){
+    public WorkOrderModel addWorkOrder(int taskId, int equipId){
         WorkOrderModel wo= new WorkOrderModel();
         logger.info("create new work order through scheduled task");
         wo.setAssignTaskId(taskId);
         wo.setEquipmentId(equipId);
-        wo.setEquipmentName(equipName);
         wo.setDueDate(LocalDate.now().plusDays(1));
         wo.setWorkOrderStatus(WorkOrderStatus.New);
-
         return workOrderRepository.save(wo);
     }
 
-
-    @Transactional
-    public void assignWorkOrderToEmployee(int workOrderId, int employeeId) {
-        //EmployeeDto employeeDto= employeeAPI.getEmployee(employeeId);
-        EmployeeDto employeeDto= new EmployeeDto();
-        WorkOrderModel workOrderModel= workOrderRepository.findById(workOrderId)
-                        .orElseThrow(() -> new RuntimeException("work order with this id doesn't exist"));
-        workOrderModel.setEmployeeId(employeeId);
-//        AssignTaskDTO assignTaskDTO= assignTaskAPI.getById(workOrderModel.getAssignTaskId());
-//        EquipmentDTO equipmentDTO= equipmentAPI.getEquipByID(assignTaskDTO.getEquipId());
-//        workOrderModel.setEquipmentId(equipmentDTO.getId());
-//        workOrderModel.setEquipmentName(equipmentDTO.getName());
-        workOrderRepository.save(workOrderModel);
-//        applicationEventPublisher.publishEvent(
-//                new WorkOrderAssignedEvent(workOrderModel.getPriority(),
-//                        workOrderModel.getId(), workOrderModel.getDueDate(),
-//                        employeeDto.getName(), employeeDto.getEmail(), employeeDto.getMobile(),
-//                        workOrderModel.getEmployeeName()));
+    public void assignWorkOrderToEmployee(int workOrderId, int employeeId) throws JsonProcessingException {
+        EmployeeDto employeeDto = employeeService.getEmployee(employeeId);
+        WorkOrderModel workOrderModel = workOrderRepository.findById(workOrderId)
+                .orElseThrow(() -> new RuntimeException("work order with this id doesn't exist"));
+        EquipmentDTO equipmentDTO = equipmentClient.getEquipment(workOrderModel.getEquipmentId());
+        workorderAssignmentProcessor.assign(employeeDto, equipmentDTO, workOrderModel);
     }
 
     @Transactional
     public void addObservation(
-            int workOrderId, String observResult, Enum equipmentStatus, WorkOrderStatus workOrderStatus, String employeeName) {
+            int workOrderId, String observResult, EquipmentStatus equipmentStatus, String employeeName) throws JsonProcessingException {
 
         WorkOrderModel workOrder =
                 workOrderRepository.findById(workOrderId)
@@ -84,6 +92,10 @@ public class WorkOrderService{
         workOrder.setEquipmentStatus(equipmentStatus);
         workOrder.setEmployeeName(employeeName);
         workOrderRepository.save(workOrder);
+        WorkOrderCompletedEvent completedEvent= new WorkOrderCompletedEvent(workOrder.getEquipmentId(), workOrder.getEquipmentStatus());
+        String payload= objectMapper.writeValueAsString(completedEvent);
+        OutboxEvent outboxEvent= new OutboxEvent(LocalDateTime.now(), EventType.WORKORDER_COMPLETED, OutboxStatus.PENDING, payload);
+        outboxRepository.save(outboxEvent);
 //        applicationEventPublisher.publishEvent(new WorkOrderCompletedEvent(
 //                workOrder.getEquipmentId(),
 //                equipmentStatus

@@ -2,7 +2,9 @@ package ir.dadeandish.application;
 
 import ir.dadeandish.domain.EmployeeDto;
 import ir.dadeandish.domain.EmployeeRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmployeeService {
 
     EmployeeRepository employeeRepository;

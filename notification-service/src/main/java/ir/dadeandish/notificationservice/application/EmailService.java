@@ -1,4 +1,4 @@
-package ir.dadeandish.application;
+package ir.dadeandish.notificationservice.application;
 
 public interface EmailService {
     void sendEmail(String to, String subject, String body);

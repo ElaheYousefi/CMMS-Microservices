@@ -1,6 +1,6 @@
 package ir.dadeandish.domain;
 
-import ir.dadeandish.api.EquipmentStatus;
+import ir.dadeandish.dto.EquipmentStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -23,6 +23,14 @@ public class EquipModel {
 
     public void setEquipmentStatus(EquipmentStatus equipmentStatus) {
         this.equipmentStatus = equipmentStatus;
+    }
+
+    public EquipModel(int id, EquipmentStatus equipmentStatus) {
+        this.id = id;
+        this.equipmentStatus = equipmentStatus;
+    }
+
+    public EquipModel() {
     }
 
     public int getId() {

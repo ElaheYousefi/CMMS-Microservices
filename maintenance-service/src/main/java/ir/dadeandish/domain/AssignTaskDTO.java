@@ -1,7 +1,5 @@
 package ir.dadeandish.domain;
 
-import org.springframework.lang.Nullable;
-
 import java.time.LocalDate;
 
 public class AssignTaskDTO {
@@ -10,16 +8,24 @@ public class AssignTaskDTO {
     private int equipId;
     private int definedTaskId;
     private LocalDate nextExecutionDate;
-
-    @Nullable
     private Integer active;
+    private int periodDay;
 
-    public AssignTaskDTO(int id, int equipId) {
+    public AssignTaskDTO(int id, int equipId, int periodDay) {
         this.id = id;
         this.equipId = equipId;
+        this.periodDay= periodDay;
     }
 
     public AssignTaskDTO() {
+    }
+
+    public int getPeriodDay() {
+        return periodDay;
+    }
+
+    public void setPeriodDay(int periodDay) {
+        this.periodDay = periodDay;
     }
 
     public int getId() {

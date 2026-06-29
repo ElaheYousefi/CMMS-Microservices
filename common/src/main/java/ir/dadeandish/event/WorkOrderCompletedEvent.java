@@ -1,11 +1,13 @@
 package ir.dadeandish.event;
 
+import ir.dadeandish.dto.EquipmentStatus;
+
 public class WorkOrderCompletedEvent {
 
     private int equipmentId;
-    private Enum equipmentStatus;
+    private EquipmentStatus equipmentStatus;
 
-    public WorkOrderCompletedEvent(int equipmentId, Enum equipmentStatus) {
+    public WorkOrderCompletedEvent(int equipmentId, EquipmentStatus equipmentStatus) {
         this.equipmentId = equipmentId;
         this.equipmentStatus = equipmentStatus;
     }
@@ -18,11 +20,11 @@ public class WorkOrderCompletedEvent {
         this.equipmentId = equipmentId;
     }
 
-    public Enum getEquipmentStatus() {
+    public EquipmentStatus getEquipmentStatus() {
         return equipmentStatus;
     }
 
-    public void setEquipmentStatus(Enum equipmentStatus) {
+    public void setEquipmentStatus(EquipmentStatus equipmentStatus) {
         this.equipmentStatus = equipmentStatus;
     }
 }
