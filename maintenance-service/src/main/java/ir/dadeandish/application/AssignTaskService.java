@@ -3,8 +3,11 @@ package ir.dadeandish.application;
 import ir.dadeandish.domain.AssignTask;
 import ir.dadeandish.domain.AssignTaskDTO;
 import ir.dadeandish.domain.AssignedTaskRepository;
+import ir.dadeandish.event.ReadyAssignTasksProducer;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -61,5 +64,14 @@ public class AssignTaskService {
                 .plusDays(10);
         //.plusDays(defineTaskDto.getPeriodDay()+ 1);
         assginTaskRepository.updateAssignTaskNextExecutionDate(taskId, nextExecutionDate);
+    }
+
+    @SpringBootApplication
+    public static class MaintenanceServiceApplication {
+
+        public static void main(String[] args) {
+            SpringApplication.run(MaintenanceServiceApplication.class, args);
+        }
+
     }
 }
