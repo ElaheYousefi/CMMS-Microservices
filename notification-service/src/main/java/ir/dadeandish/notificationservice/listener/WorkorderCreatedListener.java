@@ -38,7 +38,6 @@ public class WorkorderCreatedListener {
                         "Priority: %s\n" +
                         "Due Date: %s\n\n" +
                         "Please check your dashboard.",
-//                employeeName,
                 workOrderId,
                 equipmentName,
                 dueDate

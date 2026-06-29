@@ -36,7 +36,6 @@ public class WorkOrderService{
                             Mapper mapper, EmployeeService employeeService, ObjectMapper objectMapper, OutboxRepository outboxRepository,
                             EquipmentClient equipmentClient, WorkorderAssignmentProcessor workorderAssignmentProcessor) {
         this.workOrderRepository= workOrderRepository;
-//        this.employeeAPI= employeeAPI;
         this.mapper= mapper;
         this.employeeService= employeeService;
         this.objectMapper= objectMapper;
@@ -44,16 +43,7 @@ public class WorkOrderService{
         this.equipmentClient= equipmentClient;
         this.workorderAssignmentProcessor= workorderAssignmentProcessor;
     }
-
-//    @EventListener
-//    public void handle(ReadyAssignTasksEvent event){
-//        for(AssignTaskDTO task: event.getAssignTaskDTOList()){
-//            WorkOrderModel workOrderModel= addWorkOrder(task.getId(), task.getEquipId(), task.getEquipName());
-//            if(workOrderModel!= null)
-//                assignTaskAPI.proceedSchedule(task.getId());
-//        }
-//    }
-
+    
     public WorkOrderModel addWorkOrder(int taskId, int equipId){
         WorkOrderModel wo= new WorkOrderModel();
         logger.info("create new work order through scheduled task");
@@ -96,10 +86,6 @@ public class WorkOrderService{
         String payload= objectMapper.writeValueAsString(completedEvent);
         OutboxEvent outboxEvent= new OutboxEvent(LocalDateTime.now(), EventType.WORKORDER_COMPLETED, OutboxStatus.PENDING, payload);
         outboxRepository.save(outboxEvent);
-//        applicationEventPublisher.publishEvent(new WorkOrderCompletedEvent(
-//                workOrder.getEquipmentId(),
-//                equipmentStatus
-//        ));
     }
 
     public WorkorderDTO getWorkOrderByID(int workOrderId){

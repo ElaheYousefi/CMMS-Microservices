@@ -67,5 +67,4 @@ public class AssignTaskDTO {
     public void setActive(Integer active) {
         this.active = active;
     }
-
 }

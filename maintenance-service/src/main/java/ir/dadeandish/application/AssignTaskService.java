@@ -71,33 +71,4 @@ public class AssignTaskService {
             }
         });
     }
-//
-//    @Transactional
-//    public void processTask(AssignTaskDTO task) {
-//        try {
-//                LocalDate nextExecutionDate = LocalDate.now()
-//                        .plusDays(assignTaskDTO.getPeriodDay());
-//                assginTaskRepository.updateAssignTaskNextExecutionDate(assignTaskDTO.getId(), nextExecutionDate);
-//
-//                ReadyAssignTasksEvent event =
-//                        new ReadyAssignTasksEvent(assignTaskDTO.getId(),assignTaskDTO.getEquipId());
-//                String payload =
-//                        objectMapper.writeValueAsString(event);
-//
-//                OutboxEvent outboxEvent= new OutboxEvent("READY_ASSIGN_TASK", payload, LocalDate.now(), "PENDING");
-//
-//            }catch (Exception ex){
-//                log.error("Failed processing task{}", assignTaskDTO.getId(), ex);
-//            }
-//    }
-
-//    public void proceedSchedule(int taskId){
-//        AssignTask assignTask= assginTaskRepository.findById(taskId)
-//                .orElseThrow(()-> new RuntimeException("there is not this assign task"));
-//        //DefineTaskDto defineTaskDto= maintenanceAPI.getDefineTaskById(assignTask.getDefinedTaskId());
-//        LocalDate nextExecutionDate= LocalDate.now()
-//                .plusDays(10);
-//        //.plusDays(defineTaskDto.getPeriodDay()+ 1);
-//        assginTaskRepository.updateAssignTaskNextExecutionDate(taskId, nextExecutionDate);
-//    }
 }

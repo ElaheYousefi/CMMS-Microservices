@@ -11,6 +11,4 @@ public interface WorkOrderRepository extends JpaRepository<WorkOrderModel, Integ
     @Modifying
     @Query("update WorkOrderModel w set w.employeeId= ?2 where w.id= ?1")
     void assignWorkOrderToEmployee(int workOrderId, int employeeId);
-
-//    boolean existsByWorkOrderStatusAndAssignTask_Id(List<domain.WorkOrderStatus> workOrderStatus, int id);
 }
