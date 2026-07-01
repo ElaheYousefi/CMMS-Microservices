@@ -14,7 +14,8 @@ import java.util.List;
 
 public interface AssignedTaskRepository extends JpaRepository<AssignTask, Integer> {
 
-    @Query(value="select new ir.dadeandish.domain.AssignTaskDTO(at.id, at.equipId, dt.periodDay) from AssignTask at inner join DefinedTask dt" +
+    @Query(value="select new ir.dadeandish.domain.AssignTaskDTO(at.id, at.equipId, dt.periodDay) from AssignTask at join DefinedTask dt" +
+            "    on at.definedTaskId = dt.id" +
             " where at.active= 1 and at.nextExecutionDate<= current_date")
     List<AssignTaskDTO> findTop100ReadyTasks(Pageable pageable);
 
