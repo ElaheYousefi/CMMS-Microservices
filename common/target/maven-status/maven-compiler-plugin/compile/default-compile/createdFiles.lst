@@ -2,6 +2,6 @@ ir\dadeandish\event\WorkOrderCreatedEvent.class
 ir\dadeandish\event\ReadyAssignTasksEvent.class
 ir\dadeandish\dto\EquipmentDTO.class
 ir\dadeandish\dto\EquipmentStatus.class
-ir\dadeandish\event\WorkOrderCompletedEvent.class
 ir\dadeandish\enums\EventType.class
 ir\dadeandish\enums\OutboxStatus.class
+ir\dadeandish\event\MaintenanceCompletedEvent.class

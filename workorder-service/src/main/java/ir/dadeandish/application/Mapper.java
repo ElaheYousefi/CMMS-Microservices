@@ -1,8 +1,7 @@
 package ir.dadeandish.application;
 
 import ir.dadeandish.domain.WorkOrderModel;
-import ir.dadeandish.domain.WorkorderDTO;
-import org.springframework.context.annotation.Bean;
+import ir.dadeandish.dto.WorkorderDTO;
 import org.springframework.stereotype.Component;
 
 @Component

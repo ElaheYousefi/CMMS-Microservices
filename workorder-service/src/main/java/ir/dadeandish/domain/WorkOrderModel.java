@@ -1,5 +1,6 @@
 package ir.dadeandish.domain;
 
+import ir.dadeandish.dto.EquipmentStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -34,7 +35,7 @@ public class WorkOrderModel {
     private String employeeName;
 
     @Column(nullable = true)
-    private Enum equipmentStatus;
+    private EquipmentStatus equipmentStatus;
 
     @Column(nullable = true)
     private String equipmentName;
@@ -114,11 +115,11 @@ public class WorkOrderModel {
         this.employeeName = employeeName;
     }
 
-    public Enum getEquipmentStatus() {
+    public EquipmentStatus getEquipmentStatus() {
         return equipmentStatus;
     }
 
-    public void setEquipmentStatus(Enum equipmentStatus) {
+    public void setEquipmentStatus(EquipmentStatus equipmentStatus) {
         this.equipmentStatus = equipmentStatus;
     }
 

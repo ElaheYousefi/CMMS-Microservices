@@ -1,6 +1,6 @@
 package ir.dadeandish.application;
 
-import ir.dadeandish.domain.EmployeeDto;
+import ir.dadeandish.dto.EmployeeDto;
 import ir.dadeandish.domain.EmployeeRepository;
 import org.springframework.stereotype.Service;
 

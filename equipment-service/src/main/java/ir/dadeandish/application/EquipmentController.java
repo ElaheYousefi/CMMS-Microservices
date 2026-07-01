@@ -1,6 +1,7 @@
 package ir.dadeandish.application;
 
 import ir.dadeandish.domain.EquipModel;
+import ir.dadeandish.dto.EquipmentDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

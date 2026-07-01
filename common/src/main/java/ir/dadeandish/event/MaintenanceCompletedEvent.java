@@ -2,12 +2,12 @@ package ir.dadeandish.event;
 
 import ir.dadeandish.dto.EquipmentStatus;
 
-public class WorkOrderCompletedEvent {
+public class MaintenanceCompletedEvent {
 
     private int equipmentId;
     private EquipmentStatus equipmentStatus;
 
-    public WorkOrderCompletedEvent(int equipmentId, EquipmentStatus equipmentStatus) {
+    public MaintenanceCompletedEvent(int equipmentId, EquipmentStatus equipmentStatus) {
         this.equipmentId = equipmentId;
         this.equipmentStatus = equipmentStatus;
     }

@@ -1,6 +1,7 @@
 package ir.dadeandish;
 
 import ir.dadeandish.domain.EquipModel;
+import ir.dadeandish.dto.EquipmentDTO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,9 +14,7 @@ public class EquipmentMapper {
     }
 
     public EquipmentDTO toDTO(EquipModel model) {
-        EquipmentDTO dto = new EquipmentDTO();
-        dto.setId(model.getId());
-        dto.setName(model.getName());
+        EquipmentDTO dto = new EquipmentDTO(model.getId(), model.getName());
         return dto;
     }
 }

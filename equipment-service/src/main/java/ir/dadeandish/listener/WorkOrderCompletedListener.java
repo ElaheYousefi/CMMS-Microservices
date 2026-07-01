@@ -1,8 +1,7 @@
 package ir.dadeandish.listener;
 
 import ir.dadeandish.application.EquipService;
-import ir.dadeandish.domain.EquipModel;
-import ir.dadeandish.event.WorkOrderCompletedEvent;
+import ir.dadeandish.event.MaintenanceCompletedEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 
@@ -19,7 +18,7 @@ public class WorkOrderCompletedListener {
             topics = "workorder-completed-topic",
             groupId = "equipment-service")
     public void consume(
-            WorkOrderCompletedEvent event) {
+            MaintenanceCompletedEvent event) {
 
         equipService.updateStatus(
                 event.getEquipmentId(),

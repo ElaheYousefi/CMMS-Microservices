@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ir.dadeandish.domain.OutboxEvent;
 import ir.dadeandish.domain.OutboxRepository;
 import ir.dadeandish.enums.OutboxStatus;
-import ir.dadeandish.event.WorkOrderCompletedEvent;
+import ir.dadeandish.event.MaintenanceCompletedEvent;
 import ir.dadeandish.event.WorkOrderCreatedEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,9 +66,9 @@ public class OutboxPublisher {
     }
 
     public void publishWorkOrderCompleted(OutboxEvent outboxEvent) throws ExecutionException, JsonProcessingException, InterruptedException {
-        WorkOrderCompletedEvent kafkaEvent = objectMapper.readValue (
+        MaintenanceCompletedEvent kafkaEvent = objectMapper.readValue (
             outboxEvent.getPayload(),
-            WorkOrderCompletedEvent.class
+                MaintenanceCompletedEvent.class
         );
         kafkaTemplate.send("workorder-completed-topic", kafkaEvent).get();//wait for broker ack
     }

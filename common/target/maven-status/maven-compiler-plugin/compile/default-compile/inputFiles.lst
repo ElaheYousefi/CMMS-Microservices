@@ -2,6 +2,6 @@ E:\PROJECT\cmms-microservices\common\src\main\java\ir\dadeandish\dto\EquipmentDT
 E:\PROJECT\cmms-microservices\common\src\main\java\ir\dadeandish\dto\EquipmentStatus.java
 E:\PROJECT\cmms-microservices\common\src\main\java\ir\dadeandish\enums\EventType.java
 E:\PROJECT\cmms-microservices\common\src\main\java\ir\dadeandish\enums\OutboxStatus.java
+E:\PROJECT\cmms-microservices\common\src\main\java\ir\dadeandish\event\MaintenanceCompletedEvent.java
 E:\PROJECT\cmms-microservices\common\src\main\java\ir\dadeandish\event\ReadyAssignTasksEvent.java
-E:\PROJECT\cmms-microservices\common\src\main\java\ir\dadeandish\event\WorkOrderCompletedEvent.java
 E:\PROJECT\cmms-microservices\common\src\main\java\ir\dadeandish\event\WorkOrderCreatedEvent.java

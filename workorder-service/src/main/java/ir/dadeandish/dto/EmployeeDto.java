@@ -1,4 +1,4 @@
-package ir.dadeandish.domain;
+package ir.dadeandish.dto;
 
 public class EmployeeDto {
 
