@@ -246,10 +246,7 @@ Running `docker compose up` will:
 
 # Future Improvements
 
-* Docker Compose deployment
-* GitHub Actions CI pipeline
 * OpenAPI / Swagger documentation
-* Integration tests
 * Authentication and Authorization
 * Monitoring and Observability
 * Kubernetes deployment
