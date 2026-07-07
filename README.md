@@ -176,15 +176,24 @@ This approach guarantees that business data and integration events remain consis
 
 # Technology Stack
 
-* Java
-* Spring Boot
-* Spring Data JPA
-* PostgreSQL
-* Apache Kafka
-* Flyway
-* Maven
-* Docker
-* GitHub Actions
+Backend
+- Java 21
+- Spring Boot 3.x
+
+Messaging
+- Apache Kafka
+
+Database
+- PostgreSQL
+- Flyway
+
+Testing
+- JUnit 5
+- Mockito
+
+DevOps
+- Docker
+- GitHub Actions
 
 ---
 ## Testing Strategy
@@ -200,6 +209,7 @@ This project demonstrates several testing approaches:
 ---  
 # Running the Project
 
+The entire platform can be started with a single Docker Compose command. No local installation of Java, PostgreSQL, or Kafka is required.
 ## 1. Clone the Repository
 
 ```bash
