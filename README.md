@@ -183,15 +183,55 @@ This approach guarantees that business data and integration events remain consis
 * Apache Kafka
 * Flyway
 * Maven
-* Docker *(planned)*
-* GitHub Actions *(planned)*
+* Docker
+* GitHub Actions
 
 ---
 
 # Running the Project
 
-*(To be completed after Docker Compose is added.)*
+## 1. Clone the Repository
 
+```bash
+git clone https://github.com/ElaheYousefi/CMMS-Microservices.git
+cd CMMS-Microservices
+```
+
+## 2. Prerequisites
+
+- Docker Desktop (or Docker Engine with Docker Compose)
+
+## 3. Start the Application
+
+```bash
+cd docker
+docker compose up
+```
+
+Or run in the background:
+
+```bash
+docker compose up -d
+```
+
+## 4. What Happens
+
+Running `docker compose up` will:
+
+- Start PostgreSQL
+- Start Apache Kafka
+- Start all Spring Boot microservices
+- Connect the services to PostgreSQL and Kafka
+- Expose the REST APIs for testing
+
+## 5. Available Services
+
+- equipment-service
+- workorder-service
+- notification-service
+- maintenance-service
+- PostgreSQL
+- Apache Kafka
 ---
 
 # Future Improvements
