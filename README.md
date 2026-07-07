@@ -187,7 +187,17 @@ This approach guarantees that business data and integration events remain consis
 * GitHub Actions
 
 ---
+## Testing Strategy
 
+This project demonstrates several testing approaches:
+
+- Unit tests for business rules
+- Integration tests for REST APIs
+- Transactional Outbox tests
+- Kafka publisher tests
+- Idempotent event processing tests
+
+---  
 # Running the Project
 
 ## 1. Clone the Repository
