@@ -176,30 +176,87 @@ This approach guarantees that business data and integration events remain consis
 
 # Technology Stack
 
-* Java
-* Spring Boot
-* Spring Data JPA
-* PostgreSQL
-* Apache Kafka
-* Flyway
-* Maven
-* Docker *(planned)*
-* GitHub Actions *(planned)*
+Backend
+- Java 21
+- Spring Boot 3.x
+
+Messaging
+- Apache Kafka
+
+Database
+- PostgreSQL
+- Flyway
+
+Testing
+- JUnit 5
+- Mockito
+
+DevOps
+- Docker
+- GitHub Actions
 
 ---
+## Testing Strategy
 
+This project demonstrates several testing approaches:
+
+- Unit tests for business rules
+- Integration tests for REST APIs
+- Transactional Outbox tests
+- Kafka publisher tests
+- Idempotent event processing tests
+
+---  
 # Running the Project
 
-*(To be completed after Docker Compose is added.)*
+The entire platform can be started with a single Docker Compose command. No local installation of Java, PostgreSQL, or Kafka is required.
+## 1. Clone the Repository
 
+```bash
+git clone https://github.com/ElaheYousefi/CMMS-Microservices.git
+cd CMMS-Microservices
+```
+
+## 2. Prerequisites
+
+- Docker Desktop (or Docker Engine with Docker Compose)
+
+## 3. Start the Application
+
+```bash
+cd docker
+docker compose up
+```
+
+Or run in the background:
+
+```bash
+docker compose up -d
+```
+
+## 4. What Happens
+
+Running `docker compose up` will:
+
+- Start PostgreSQL
+- Start Apache Kafka
+- Start all Spring Boot microservices
+- Connect the services to PostgreSQL and Kafka
+- Expose the REST APIs for testing
+
+## 5. Available Services
+
+- equipment-service
+- workorder-service
+- notification-service
+- maintenance-service
+- PostgreSQL
+- Apache Kafka
 ---
 
 # Future Improvements
 
-* Docker Compose deployment
-* GitHub Actions CI pipeline
 * OpenAPI / Swagger documentation
-* Integration tests
 * Authentication and Authorization
 * Monitoring and Observability
 * Kubernetes deployment
