@@ -11,6 +11,9 @@ public class ReadyAssignTasksEvent{
         this.equipId = equipId;
     }
 
+    public ReadyAssignTasksEvent() {
+    }
+
     public int getTaskId() {
         return taskId;
     }

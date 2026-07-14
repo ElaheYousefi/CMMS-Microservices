@@ -47,7 +47,10 @@ public class WorkOrderService{
     
     public WorkOrderModel addWorkOrder(int taskId, int equipId){
         WorkOrderModel wo= new WorkOrderModel();
-        logger.info("create new work order through scheduled task");
+        logger.info("Received event : task={}, equipment={}",
+                taskId,
+                equipId);
+
         wo.setAssignTaskId(taskId);
         wo.setEquipmentId(equipId);
         wo.setDueDate(LocalDate.now().plusDays(1));

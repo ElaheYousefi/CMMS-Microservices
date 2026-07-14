@@ -2,22 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10f63343-6837-4ac3-ad9f-718d752b1c76" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/equipment-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/maintenance-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/workorder-service/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workorder-service/src/test/java/ir/dadeandish/workorder/integration/WorkOrderAssignmentIntegrationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workorder-service/src/test/java/ir/dadeandish/workorder/integration/WorkOrderCompletionIntegrationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workorder-service/src/test/java/ir/dadeandish/workorder/messaging/IdempotentEventProcessingTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workorder-service/src/test/java/ir/dadeandish/workorder/outbox/KafkaPublisherTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workorder-service/src/test/java/ir/dadeandish/workorder/outbox/TransactionalOutboxTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workorder-service/src/test/java/ir/dadeandish/workorder/outbox/WorkorderAssignmentProcessorTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/workorder-service/src/test/java/ir/dadeandish/workorder/service/WorkorderBusinessRulesTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/ir/dadeandish/event/ReadyAssignTasksEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/ir/dadeandish/event/ReadyAssignTasksEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/equipment-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/equipment-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/equipment-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/equipment-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/equipment-service/src/test/java/ir/dadeandish/equipmentservice/EquipmentServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/equipment-service/src/test/java/ir/dadeandish/equipmentservice/EquipmentServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/application/DefinedTaskService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/AssignedTaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/AssignedTaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maintenance-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/maintenance-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/AssignTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/AssignTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/AssignTaskDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/AssignTaskDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/DefineTaskDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/DefineTaskDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/DefinedTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/domain/DefinedTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/publish/OutboxEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/maintenance-service/src/main/java/ir/dadeandish/publish/OutboxEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/maintenance-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/maintenance-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/test/java/ir/dadeandish/notificationservice/NotificationServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/test/java/ir/dadeandish/notificationservice/NotificationServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workorder-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/workorder-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workorder-service/src/main/java/ir/dadeandish/application/WorkOrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/workorder-service/src/main/java/ir/dadeandish/application/WorkOrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workorder-service/src/main/java/ir/dadeandish/listener/ReadyTaskListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/workorder-service/src/main/java/ir/dadeandish/listener/ReadyTaskListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/workorder-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/workorder-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workorder-service/src/test/java/ir/dadeandish/workorder/WorkorderApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/workorder-service/src/test/java/ir/dadeandish/workorder/WorkorderApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +56,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/maintenance-service" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -55,11 +64,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\PROJECT\cmms-microservices\workorder-service\src\test\java\ir\dadeandish\workorder\messaging" />
+      <recent name="E:\PROJECT\cmms-microservices\workorder-service\src\test\java\ir\dadeandish\workorder\outbox" />
+      <recent name="E:\PROJECT\cmms-microservices\workorder-service\src\test\java\ir\dadeandish\workorder\integration" />
+      <recent name="E:\PROJECT\cmms-microservices\workorder-service\src\test\java\ir\dadeandish\workorder\service" />
       <recent name="E:\PROJECT\cmms-microservices\equipment-service\src\main\java\ir\dadeandish" />
-      <recent name="E:\PROJECT\cmms-microservices\maintenance-service\src\main\java\ir\dadeandish\maintenanceservice\domain" />
-      <recent name="E:\PROJECT\cmms-microservices\maintenance-service\src\main\java\ir\dadeandish\maintenanceservice\application" />
-      <recent name="E:\PROJECT\cmms-microservices\maintenance-service\src\main\java\ir\dadeandish\maintenanceservice" />
-      <recent name="E:\PROJECT\cmms-microservices\maintenance-service\src\main\resources\db\migration" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -86,7 +95,12 @@
       <workItem from="1782385943311" duration="315000" />
       <workItem from="1782726416981" duration="1918000" />
       <workItem from="1782801359188" duration="10069000" />
-      <workItem from="1782903604850" duration="595000" />
+      <workItem from="1782903604850" duration="1346000" />
+      <workItem from="1783166624272" duration="3115000" />
+      <workItem from="1783404844925" duration="2291000" />
+      <workItem from="1783414335094" duration="4941000" />
+      <workItem from="1783925229452" duration="543000" />
+      <workItem from="1783927068300" duration="6158000" />
     </task>
     <servers />
   </component>

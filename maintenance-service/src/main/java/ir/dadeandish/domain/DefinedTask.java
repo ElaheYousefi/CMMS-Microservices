@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class DefinedTask {
@@ -12,19 +13,19 @@ public class DefinedTask {
     @GeneratedValue
     private int id;
     private String taskName;
-    private LocalDate endDate;
+    private LocalDateTime endDate;
     private int periodDay;
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
@@ -52,7 +53,7 @@ public class DefinedTask {
         this.periodDay = periodDay;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 }

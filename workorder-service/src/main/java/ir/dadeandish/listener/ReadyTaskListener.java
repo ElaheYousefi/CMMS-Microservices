@@ -20,4 +20,5 @@ public class ReadyTaskListener {
         workOrderService.addWorkOrder(event.getTaskId(),
                 event.getEquipId());
     }
+
 }

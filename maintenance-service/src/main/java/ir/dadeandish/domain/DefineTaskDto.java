@@ -1,14 +1,15 @@
 package ir.dadeandish.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DefineTaskDto {
 
     private int id;
     private String taskName;
-    private LocalDate endDate;
+    private LocalDateTime endDate;
     private int periodDay;
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
     public int getId() {
         return id;
@@ -26,12 +27,16 @@ public class DefineTaskDto {
         this.taskName = taskName;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
     public int getPeriodDay() {
@@ -42,11 +47,7 @@ public class DefineTaskDto {
         this.periodDay = periodDay;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
     }
 }

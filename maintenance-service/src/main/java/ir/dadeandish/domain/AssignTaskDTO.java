@@ -1,13 +1,14 @@
 package ir.dadeandish.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AssignTaskDTO {
 
     private int id;
     private int equipId;
     private int definedTaskId;
-    private LocalDate nextExecutionDate;
+    private LocalDateTime nextExecutionDate;
     private Integer active;
     private int periodDay;
 
@@ -52,11 +53,11 @@ public class AssignTaskDTO {
         this.definedTaskId = definedTaskId;
     }
 
-    public LocalDate getNextExecutionDate() {
+    public LocalDateTime getNextExecutionDate() {
         return nextExecutionDate;
     }
 
-    public void setNextExecutionDate(LocalDate nextExecutionDate) {
+    public void setNextExecutionDate(LocalDateTime nextExecutionDate) {
         this.nextExecutionDate = nextExecutionDate;
     }
 

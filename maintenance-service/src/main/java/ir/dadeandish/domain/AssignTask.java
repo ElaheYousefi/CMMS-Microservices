@@ -3,6 +3,7 @@ package ir.dadeandish.domain;
 import jakarta.persistence.*;
 import org.springframework.lang.Nullable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class AssignTask {
@@ -15,16 +16,16 @@ public class AssignTask {
 
     private int definedTaskId;
 
-    private LocalDate nextExecutionDate;
+    private LocalDateTime nextExecutionDate;
 
     @Nullable
     private Integer active;
 
-    public LocalDate getNextExecutionDate() {
+    public LocalDateTime getNextExecutionDate() {
         return nextExecutionDate;
     }
 
-    public void setNextExecutionDate(LocalDate nextExecutionDate) {
+    public void setNextExecutionDate(LocalDateTime nextExecutionDate) {
         this.nextExecutionDate = nextExecutionDate;
     }
 
