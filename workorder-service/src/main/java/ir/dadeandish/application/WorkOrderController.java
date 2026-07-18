@@ -2,6 +2,8 @@ package ir.dadeandish.application;
 
 import ir.dadeandish.dto.AssignWorkOrderDTO;
 import ir.dadeandish.dto.ObservationDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class WorkOrderController {
 
     WorkOrderService workOrderService;
+    private static final Logger logger= LoggerFactory.getLogger(WorkOrderController.class);
 
     @Autowired
     public WorkOrderController(WorkOrderService workOrderService) {
@@ -20,6 +23,7 @@ public class WorkOrderController {
     @GetMapping("/assignWorkOrder")
     ResponseEntity<String> AssignWorkOrderToEmployee(@RequestBody AssignWorkOrderDTO assignWorkOrderDTO){
         try {
+            logger.debug("employeeId in controller="+ assignWorkOrderDTO.getEmployeeId());
             workOrderService.assignWorkOrderToEmployee(assignWorkOrderDTO.getWorkOrderId(), assignWorkOrderDTO.getEmployeeId());
         }catch (Exception e){
             e.printStackTrace();
@@ -33,6 +37,7 @@ public class WorkOrderController {
        try {
            workOrderService.addObservation(observationDTO.getWorkOrderId(), observationDTO.getObservResult(), observationDTO.getEquipStatus(), "Elahe Yousefi");
        }catch (Exception e){
+           e.printStackTrace();
            return "Error in saving result";
        }
        return "Saving observation result was successful";

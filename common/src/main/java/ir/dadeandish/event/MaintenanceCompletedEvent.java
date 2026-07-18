@@ -7,6 +7,9 @@ public class MaintenanceCompletedEvent {
     private int equipmentId;
     private EquipmentStatus equipmentStatus;
 
+    public MaintenanceCompletedEvent() {
+    }
+
     public MaintenanceCompletedEvent(int equipmentId, EquipmentStatus equipmentStatus) {
         this.equipmentId = equipmentId;
         this.equipmentStatus = equipmentStatus;

@@ -8,6 +8,8 @@ import ir.dadeandish.dto.EquipmentDTO;
 import ir.dadeandish.enums.EventType;
 import ir.dadeandish.enums.OutboxStatus;
 import ir.dadeandish.event.WorkOrderCreatedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ public class WorkorderAssignmentProcessor {
     private WorkOrderRepository workOrderRepository;
     private  final ObjectMapper objectMapper;
     private final OutboxRepository outboxRepository;
+    private static final Logger logger= LoggerFactory.getLogger(WorkOrderService.class);
 
     public WorkorderAssignmentProcessor(WorkOrderRepository workOrderRepository, ObjectMapper objectMapper, OutboxRepository outboxRepository) {
         this.workOrderRepository = workOrderRepository;
@@ -34,8 +37,11 @@ public class WorkorderAssignmentProcessor {
 
         workOrderModel.setEmployeeId(employeeDto.getId());
         workOrderModel.setEquipmentId(workOrderModel.getEquipmentId());
-        workOrderRepository.save(workOrderModel);
 
+        workOrderModel= workOrderRepository.save(workOrderModel);
+        logger.debug("workOrder.employee="+ workOrderModel.getEmployeeId());
+        logger.debug("workorder.getId="+ workOrderModel.getId());
+        logger.debug("workorder.getEquipmentId="+ workOrderModel.getEquipmentId());
         WorkOrderCreatedEvent workOrderCreatedEvent= new WorkOrderCreatedEvent(workOrderModel.getAssignTaskId(),
                 workOrderModel.getId(), employeeDto.getId(), employeeDto.getMobile(), employeeDto.getEmail(), employeeDto.getName(), equipmentDTO.getName());
         String payload = objectMapper.writeValueAsString(workOrderCreatedEvent);

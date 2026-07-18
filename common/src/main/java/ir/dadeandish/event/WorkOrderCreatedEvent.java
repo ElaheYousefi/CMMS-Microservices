@@ -10,6 +10,9 @@ public class WorkOrderCreatedEvent {
     private String employeeName;
     private String equipmentName;
 
+    public WorkOrderCreatedEvent() {
+    }
+
     public WorkOrderCreatedEvent(Integer assignTaskId, Integer workOrderId, Integer employeeId, String mobile, String email, String employeeName, String equipmentName) {
         this.assignTaskId = assignTaskId;
         this.workOrderId = workOrderId;

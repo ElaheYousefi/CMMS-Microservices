@@ -1,10 +1,7 @@
 package ir.dadeandish.domain;
 
 import ir.dadeandish.dto.EquipmentStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="equipment")
@@ -15,6 +12,8 @@ public class EquipModel {
     private int id;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private EquipmentStatus equipmentStatus;
 
     public EquipmentStatus getEquipmentStatus() {

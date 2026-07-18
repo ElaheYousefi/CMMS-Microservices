@@ -7,16 +7,23 @@ import ir.dadeandish.domain.OutboxRepository;
 import ir.dadeandish.enums.OutboxStatus;
 import ir.dadeandish.event.MaintenanceCompletedEvent;
 import ir.dadeandish.event.WorkOrderCreatedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.concurrent.ExecutionException;
 
+@Service
 public class OutboxPublisher {
 
     private final OutboxRepository outboxRepository;
     private final ObjectMapper objectMapper;
     private final KafkaTemplate<String, Object> kafkaTemplate;
+    private static final Logger logger= LoggerFactory.getLogger(OutboxPublisher.class);
 
+    @Autowired
     public OutboxPublisher(OutboxRepository outboxRepository, ObjectMapper objectMapper, KafkaTemplate<String, Object> kafkaTemplate) {
         this.outboxRepository = outboxRepository;
         this.objectMapper = objectMapper;
@@ -62,7 +69,8 @@ public class OutboxPublisher {
                 outboxEvent.getPayload(),
                 WorkOrderCreatedEvent.class
         );
-        kafkaTemplate.send("workorder-assigned-topic", kafkaEvent).get();//wait for broker ack
+        logger.debug("send work order assign task");
+        kafkaTemplate.send("workorder-created-topic", kafkaEvent).get();//wait for broker ack
     }
 
     public void publishWorkOrderCompleted(OutboxEvent outboxEvent) throws ExecutionException, JsonProcessingException, InterruptedException {
@@ -70,6 +78,6 @@ public class OutboxPublisher {
             outboxEvent.getPayload(),
                 MaintenanceCompletedEvent.class
         );
-        kafkaTemplate.send("workorder-completed-topic", kafkaEvent).get();//wait for broker ack
+        kafkaTemplate.send("maintenance-completed-topic", kafkaEvent).get();//wait for broker ack
     }
 }

@@ -59,7 +59,9 @@ public class WorkOrderService{
     }
 
     public void assignWorkOrderToEmployee(int workOrderId, int employeeId) throws JsonProcessingException {
-        EmployeeDto employeeDto = employeeService.getEmployee(employeeId);
+        logger.debug("employeeId in service="+ employeeId);
+        EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);
+        logger.debug("employeeI after get from db="+ employeeDto.getId());
         WorkOrderModel workOrderModel = workOrderRepository.findById(workOrderId)
                 .orElseThrow(() -> new RuntimeException("work order with this id doesn't exist"));
         EquipmentDTO equipmentDTO = equipmentClient.getEquipment(workOrderModel.getEquipmentId());

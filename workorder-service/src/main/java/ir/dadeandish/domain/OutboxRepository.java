@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface OutboxRepository extends JpaRepository<OutboxEvent, Integer> {
 
-    @Query("select o.id from OutboxEvent o where o.status= 'PENDING' and o.eventType= 'WORKORDER_ASSIGNED_EMPLOYEE'")
+    @Query("select o.id from OutboxEvent o where o.status= 'PENDING'")
     List<Integer> findTop100Pending(Pageable pageable);
 }

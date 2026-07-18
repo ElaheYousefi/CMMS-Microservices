@@ -10,8 +10,9 @@ import java.time.LocalDateTime;
 public class OutboxEvent {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)

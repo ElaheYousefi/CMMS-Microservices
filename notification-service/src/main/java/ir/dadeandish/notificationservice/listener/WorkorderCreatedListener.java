@@ -3,6 +3,8 @@ package ir.dadeandish.notificationservice.listener;
 import ir.dadeandish.event.WorkOrderCreatedEvent;
 import ir.dadeandish.notificationservice.application.EmailService;
 import ir.dadeandish.notificationservice.application.SmsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ public class WorkorderCreatedListener {
 
     private EmailService emailService;
     private SmsService smsService;
+    private static final Logger logger= LoggerFactory.getLogger(WorkorderCreatedListener.class);
 
     @Autowired
     public WorkorderCreatedListener(SmsService smsService, EmailService emailService) {
@@ -20,9 +23,10 @@ public class WorkorderCreatedListener {
         this.smsService= smsService;
     }
 
-    @KafkaListener(topics="workorder-assigned-topic",
-            groupId="workorder-group")
+    @KafkaListener(topics="workorder-created-topic",
+            groupId="notification-group")
     public void handle(WorkOrderCreatedEvent e){
+        logger.debug("consume work order assign task");
         sendEmail(e.getWorkOrderId(), e.getEmail(), LocalDateTime.now(), e.getEmployeeName(), e.getEquipmentName());
         sendSMS(e.getWorkOrderId(), e.getMobile(), LocalDateTime.now(), e.getEmployeeName(), e.getEquipmentName());
     }
@@ -35,9 +39,9 @@ public class WorkorderCreatedListener {
                         "A new work order has been assigned to you.\n\n" +
                         "Work Order ID: %d\n" +
                         "Equipment: %s\n" +
-                        "Priority: %s\n" +
                         "Due Date: %s\n\n" +
                         "Please check your dashboard.",
+                employeeName,
                 workOrderId,
                 equipmentName,
                 dueDate
@@ -49,7 +53,7 @@ public class WorkorderCreatedListener {
     private void sendSMS(Integer workOrderId, String mobile, LocalDateTime dueDate, String employeeName, String equipmentName) {
 
         String message = String.format(
-                "New Work Order Assigned:\nID: %d\nEquipment: %s\nPriority: %s",
+                "New Work Order Assigned:\nID: %d\nEquipment: %s",
                 workOrderId,
                 equipmentName
         );
