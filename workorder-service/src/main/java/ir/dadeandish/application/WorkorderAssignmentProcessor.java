@@ -39,14 +39,23 @@ public class WorkorderAssignmentProcessor {
         workOrderModel.setEquipmentId(workOrderModel.getEquipmentId());
 
         workOrderModel= workOrderRepository.save(workOrderModel);
-        logger.debug("workOrder.employee="+ workOrderModel.getEmployeeId());
-        logger.debug("workorder.getId="+ workOrderModel.getId());
-        logger.debug("workorder.getEquipmentId="+ workOrderModel.getEquipmentId());
         WorkOrderCreatedEvent workOrderCreatedEvent= new WorkOrderCreatedEvent(workOrderModel.getAssignTaskId(),
                 workOrderModel.getId(), employeeDto.getId(), employeeDto.getMobile(), employeeDto.getEmail(), employeeDto.getName(), equipmentDTO.getName());
         String payload = objectMapper.writeValueAsString(workOrderCreatedEvent);
 
         OutboxEvent outboxEvent = new OutboxEvent(LocalDateTime.now(), EventType.WORKORDER_ASSIGNED, OutboxStatus.PENDING, payload);
         outboxRepository.save(outboxEvent);
+    }
+
+    @Transactional
+    public void assignAndFail(
+            EmployeeDto employee,
+            EquipmentDTO equipment,
+            WorkOrderModel workOrder)
+            throws Exception {
+
+        assign(employee, equipment, workOrder);
+
+        throw new RuntimeException("Rollback Test");
     }
 }

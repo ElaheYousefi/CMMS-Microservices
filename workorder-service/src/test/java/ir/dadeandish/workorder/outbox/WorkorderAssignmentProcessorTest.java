@@ -1,4 +1,4 @@
-//package ir.dadeandish.workorder.outbox;
+package ir.dadeandish.workorder.outbox;
 //
 //import com.fasterxml.jackson.core.JsonProcessingException;
 //import com.fasterxml.jackson.databind.ObjectMapper;
@@ -136,3 +136,71 @@
 ////                .save(any(OutboxEvent.class));
 ////    }
 //}
+
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ir.dadeandish.application.WorkOrderService;
+import ir.dadeandish.application.WorkorderAssignmentProcessor;
+import ir.dadeandish.domain.OutboxEvent;
+import ir.dadeandish.domain.OutboxRepository;
+import ir.dadeandish.domain.WorkOrderModel;
+import ir.dadeandish.domain.WorkOrderRepository;
+import ir.dadeandish.dto.EmployeeDto;
+import ir.dadeandish.dto.EquipmentDTO;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+
+@ExtendWith(MockitoExtension.class)
+class WorkorderAssignmentProcessorTest {
+
+    @Mock
+    WorkOrderRepository workOrderRepository;
+
+    @Mock
+    OutboxRepository outboxRepository;
+
+    @Mock
+    ObjectMapper objectMapper;
+
+    @InjectMocks
+    WorkorderAssignmentProcessor service;
+
+    @Test
+    void assign_shouldSaveWorkOrderAndOutboxEvent() throws Exception {
+
+        EmployeeDto employee = new EmployeeDto();
+        employee.setId(5);
+        employee.setName("John");
+        employee.setEmail("john@test.com");
+        employee.setMobile("123");
+
+        EquipmentDTO equipment = new EquipmentDTO();
+        equipment.setName("Pump");
+
+        WorkOrderModel workOrder = new WorkOrderModel();
+        workOrder.setAssignTaskId(3);
+        workOrder.setEquipmentId(5);
+
+        when(workOrderRepository.save(any()))
+                .thenAnswer(inv -> {
+                    WorkOrderModel w = inv.getArgument(0);
+                    w.setId(100);
+                    return w;
+                });
+
+        when(objectMapper.writeValueAsString(any()))
+                .thenReturn("{json}");
+
+        service.assign(employee, equipment, workOrder);
+
+        verify(workOrderRepository).save(any(WorkOrderModel.class));
+        verify(outboxRepository).save(any(OutboxEvent.class));
+    }
+
+}

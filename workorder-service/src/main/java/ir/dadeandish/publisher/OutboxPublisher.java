@@ -65,7 +65,7 @@ public class OutboxPublisher {
 
     public void publishWorkOrderAssigned(OutboxEvent outboxEvent) throws ExecutionException, JsonProcessingException, InterruptedException {
 
-        WorkOrderCreatedEvent kafkaEvent = objectMapper.readValue(
+        WorkOrderCreatedEvent kafkaEvent= objectMapper.readValue(
                 outboxEvent.getPayload(),
                 WorkOrderCreatedEvent.class
         );
