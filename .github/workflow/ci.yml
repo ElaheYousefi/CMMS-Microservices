@@ -1,0 +1,217 @@
+
+name: CMMS Microservices CI
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+  pull_request:
+    branches:
+      - master
+
+
+jobs:
+
+  build-and-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # =========================================================
+      # 1. Checkout source code
+      # =========================================================
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+
+      # =========================================================
+      # 2. Setup Java 17
+      # =========================================================
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+
+      # =========================================================
+      # 3. Check Java and Maven
+      # =========================================================
+      - name: Check Java and Maven
+        run: |
+          java -version
+          mvn -version
+
+
+      # =========================================================
+      # 4. Build and test Equipment Service
+      # =========================================================
+      - name: Build equipment-service
+        working-directory: equipment-service
+        run: mvn clean install
+
+
+      # =========================================================
+      # 5. Build and test Maintenance Service
+      # =========================================================
+      - name: Build maintenance-service
+        working-directory: maintenance-service
+        run: mvn clean install
+
+
+      # =========================================================
+      # 6. Build and test Work Order Service
+      # =========================================================
+      - name: Build workorder-service
+        working-directory: workorder-service
+        run: mvn clean install
+
+
+      # =========================================================
+      # 7. Build and test Notification Service
+      # =========================================================
+      - name: Build notification-service
+        working-directory: notification-service
+        run: mvn clean install
+
+
+      # =========================================================
+      # 8. Build all Docker images
+      # =========================================================
+      - name: Build Docker images
+	run: docker compose -f docker/docker-compose.yml build
+
+
+      # =========================================================
+      # 9. Start complete microservice environment
+      #
+      # PostgreSQL
+      # Kafka
+      # Equipment Service
+      # Maintenance Service
+      # Work Order Service
+      # Notification Service
+      # =========================================================
+      - name: Start Docker Compose
+  	run: docker compose -f docker/docker-compose.yml up -d
+
+      # =========================================================
+      # 10. Show container status
+      # =========================================================
+      - name: Show container status
+  	run: docker compose -f docker/docker-compose.yml ps	
+
+      # =========================================================
+      # 11. Wait for Equipment Service
+      # =========================================================
+      - name: Wait for equipment-service
+        run: |
+          for i in {1..30}; do
+            if curl --fail --silent http://localhost:8081/actuator/health > /dev/null; then
+              echo "equipment-service is ready"
+              exit 0
+            fi
+
+            echo "Waiting for equipment-service..."
+            sleep 5
+          done
+
+          echo "equipment-service did not become ready"
+          exit 1
+
+
+      # =========================================================
+      # 12. Wait for Maintenance Service
+      # =========================================================
+      - name: Wait for maintenance-service
+        run: |
+          for i in {1..30}; do
+            if curl --fail --silent http://localhost:8082/actuator/health > /dev/null; then
+              echo "maintenance-service is ready"
+              exit 0
+            fi
+
+            echo "Waiting for maintenance-service..."
+            sleep 5
+          done
+
+          echo "maintenance-service did not become ready"
+          exit 1
+
+
+      # =========================================================
+      # 13. Wait for Work Order Service
+      # =========================================================
+      - name: Wait for workorder-service
+        run: |
+          for i in {1..30}; do
+            if curl --fail --silent http://localhost:8083/actuator/health > /dev/null; then
+              echo "workorder-service is ready"
+              exit 0
+            fi
+
+            echo "Waiting for workorder-service..."
+            sleep 5
+          done
+
+          echo "workorder-service did not become ready"
+          exit 1
+
+
+      # =========================================================
+      # 14. Wait for Notification Service
+      # =========================================================
+      - name: Wait for notification-service
+        run: |
+          for i in {1..30}; do
+            if curl --fail --silent http://localhost:8084/actuator/health > /dev/null; then
+              echo "notification-service is ready"
+              exit 0
+            fi
+
+            echo "Waiting for notification-service..."
+            sleep 5
+          done
+
+          echo "notification-service did not become ready"
+          exit 1
+
+
+      # =========================================================
+      # 15. Final health check
+      # =========================================================
+      - name: Check all services
+        run: |
+          echo "Equipment Service:"
+          curl --fail http://localhost:8081/actuator/health
+
+          echo ""
+          echo "Maintenance Service:"
+          curl --fail http://localhost:8082/actuator/health
+
+          echo ""
+          echo "Work Order Service:"
+          curl --fail http://localhost:8083/actuator/health
+
+          echo ""
+          echo "Notification Service:"
+          curl --fail http://localhost:8084/actuator/health
+
+
+      # =========================================================
+      # 16. Show logs if anything failed
+      # =========================================================
+      - name: Show Docker logs
+        if: failure()
+  	run: docker compose -f docker/docker-compose.yml logs
+
+      # =========================================================
+      # 17. Stop Docker Compose
+      # =========================================================
+      - name: Stop Docker Compose
+        if: always()
+  	run: docker compose -f docker/docker-compose.yml down
