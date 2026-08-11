@@ -5,4 +5,5 @@ public enum EquipmentStatus {
     alarm,
     critical,
     underRepair
+
 }
