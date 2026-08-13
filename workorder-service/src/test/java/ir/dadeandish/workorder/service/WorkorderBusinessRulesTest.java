@@ -1,16 +1,4 @@
 package ir.dadeandish.workorder.service;
-//
-//import org.junit.jupiter.api.Test;
-//import org.springframework.boot.test.context.SpringBootTest;
-//
-//@SpringBootTest
-//class WorkorderApplicationTests {
-//
-//    @Test
-//    void contextLoads() {
-//    }
-//
-//}
 
 import ir.dadeandish.application.EmployeeService;
 import ir.dadeandish.application.WorkOrderService;
@@ -27,6 +15,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class WorkorderBusinessRulesTest {
 
     @Mock
