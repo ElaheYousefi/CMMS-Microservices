@@ -83,7 +83,7 @@ jobs:
       # 8. Build all Docker images
       # =========================================================
       - name: Build Docker images
-	run: docker compose -f docker/docker-compose.yml build
+        run: docker compose -f docker/docker-compose.yml build
 
 
       # =========================================================
@@ -97,13 +97,13 @@ jobs:
       # Notification Service
       # =========================================================
       - name: Start Docker Compose
-  	run: docker compose -f docker/docker-compose.yml up -d
+        run: docker compose -f docker/docker-compose.yml up -d
 
       # =========================================================
       # 10. Show container status
       # =========================================================
       - name: Show container status
-  	run: docker compose -f docker/docker-compose.yml ps	
+        run: docker compose -f docker/docker-compose.yml ps	
 
       # =========================================================
       # 11. Wait for Equipment Service
@@ -207,11 +207,11 @@ jobs:
       # =========================================================
       - name: Show Docker logs
         if: failure()
-  	run: docker compose -f docker/docker-compose.yml logs
+        run: docker compose -f docker/docker-compose.yml logs
 
       # =========================================================
       # 17. Stop Docker Compose
       # =========================================================
       - name: Stop Docker Compose
         if: always()
-  	run: docker compose -f docker/docker-compose.yml down
+        run: docker compose -f docker/docker-compose.yml down
