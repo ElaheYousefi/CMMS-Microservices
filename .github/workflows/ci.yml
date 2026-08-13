@@ -45,10 +45,16 @@ jobs:
         run: |
           java -version
           mvn -version
-
+          
+      # =========================================================
+      # 4. Build and test Common Service
+      # =========================================================
+      - name: Build common library
+        working-directory: common
+        run: mvn clean install
 
       # =========================================================
-      # 4. Build and test Equipment Service
+      # 5. Build and test Equipment Service
       # =========================================================
       - name: Build equipment-service
         working-directory: equipment-service
@@ -56,7 +62,7 @@ jobs:
 
 
       # =========================================================
-      # 5. Build and test Maintenance Service
+      # 6. Build and test Maintenance Service
       # =========================================================
       - name: Build maintenance-service
         working-directory: maintenance-service
@@ -64,7 +70,7 @@ jobs:
 
 
       # =========================================================
-      # 6. Build and test Work Order Service
+      # 7. Build and test Work Order Service
       # =========================================================
       - name: Build workorder-service
         working-directory: workorder-service
@@ -72,7 +78,7 @@ jobs:
 
 
       # =========================================================
-      # 7. Build and test Notification Service
+      # 8. Build and test Notification Service
       # =========================================================
       - name: Build notification-service
         working-directory: notification-service
@@ -80,14 +86,14 @@ jobs:
 
 
       # =========================================================
-      # 8. Build all Docker images
+      # 9. Build all Docker images
       # =========================================================
       - name: Build Docker images
         run: docker compose -f docker/docker-compose.yml build
 
 
       # =========================================================
-      # 9. Start complete microservice environment
+      # 10. Start complete microservice environment
       #
       # PostgreSQL
       # Kafka
@@ -100,13 +106,13 @@ jobs:
         run: docker compose -f docker/docker-compose.yml up -d
 
       # =========================================================
-      # 10. Show container status
+      # 11. Show container status
       # =========================================================
       - name: Show container status
         run: docker compose -f docker/docker-compose.yml ps	
 
       # =========================================================
-      # 11. Wait for Equipment Service
+      # 12. Wait for Equipment Service
       # =========================================================
       - name: Wait for equipment-service
         run: |
@@ -125,7 +131,7 @@ jobs:
 
 
       # =========================================================
-      # 12. Wait for Maintenance Service
+      # 13. Wait for Maintenance Service
       # =========================================================
       - name: Wait for maintenance-service
         run: |
@@ -144,7 +150,7 @@ jobs:
 
 
       # =========================================================
-      # 13. Wait for Work Order Service
+      # 14. Wait for Work Order Service
       # =========================================================
       - name: Wait for workorder-service
         run: |
@@ -163,7 +169,7 @@ jobs:
 
 
       # =========================================================
-      # 14. Wait for Notification Service
+      # 15. Wait for Notification Service
       # =========================================================
       - name: Wait for notification-service
         run: |
@@ -182,7 +188,7 @@ jobs:
 
 
       # =========================================================
-      # 15. Final health check
+      # 16. Final health check
       # =========================================================
       - name: Check all services
         run: |
@@ -203,14 +209,14 @@ jobs:
 
 
       # =========================================================
-      # 16. Show logs if anything failed
+      # 17. Show logs if anything failed
       # =========================================================
       - name: Show Docker logs
         if: failure()
         run: docker compose -f docker/docker-compose.yml logs
 
       # =========================================================
-      # 17. Stop Docker Compose
+      # 18. Stop Docker Compose
       # =========================================================
       - name: Stop Docker Compose
         if: always()
